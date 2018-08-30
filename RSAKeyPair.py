@@ -10,20 +10,18 @@ from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 
 numBits = 1024
-byteURL = "https://www.random.org/cgi-bin/randbyte?nbytes=+"+str(numBits)+"&format=h"
+typeOfByte = "h"
+byteURL = "https://www.random.org/cgi-bin/randbyte?nbytes=+"+str(numBits)+"&format="+typeOfByte
 
-# create rand func using random.org data
-# check if not above quota
-# time out for 2 minutes
+# output should be random byte string
 def getRandomBytes(self):
     URLRequest = Request(byteURL.format(numBits))
     URLRequest.add_header("User-Agent", "andrew_wei1@brown.edu")
     data =  urlopen(URLRequest).read()
     decoded = ""
     for datum in data.splitlines():
-        decoded += (datum.decode("utf-8"))
-    print(decoded)
-    return decoded
+        decoded+=str(datum.decode("utf-8"))
+    return decoded.encode()
 
 # use RSA.generate function to create keys
 # key = RSA.generate(numBits, get_random_bytes)
